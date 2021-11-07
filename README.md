@@ -1,2 +1,2 @@
 # Socket--Programing-
-Socket -Programming for TCP/IP for communication between client and server
+Socket - Programming for TCP/IP prortocol for communication between Client and Server  written in C language
