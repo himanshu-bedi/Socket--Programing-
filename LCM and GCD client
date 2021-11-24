@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+
+int main(void)
+{
+    int socket_desc;
+    struct sockaddr_in server_addr;
+    char server_message[255], client_message[255];
+
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    
+    if(socket_desc < 0){
+        printf("Unable to create socket\n");
+        return -1;
+    }
+    
+    printf("Socket created successfully\n");
+    
+   
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(2000);
+    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    
+
+    if(connect(socket_desc, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0){
+        printf("Unable to connect\n");
+        return -1;
+    }
+    printf("Connected with server successfully\n");
+   int n;
+   int num1,num2,ans,choice;
+ 
+ S: bzero(server_message, 255);
+ n = read(socket_desc, server_message, 255);
+ printf("Server : %s\n", server_message);
+ scanf("%d",&num1);
+ write(socket_desc,&num1,sizeof(int));
+
+  bzero(server_message, 255);
+ n = read(socket_desc, server_message, 255);
+ printf("Server : %s\n", server_message);
+ scanf("%d",&num2);
+  write(socket_desc,&num2,sizeof(int));
+
+   bzero(server_message, 255);
+
+
+
+read(socket_desc,server_message,255);
+
+printf("Server : %s\n", server_message);
+ scanf("%d",&choice);
+
+ write(socket_desc,&choice,sizeof(int));
+
+read(socket_desc, &ans, sizeof(int));
+printf("Server : Ans is : %d\n", ans);
+if(choice==3)
+goto Q;
+
+else
+goto S;
+
+
+  
+ Q:
+ printf("Exiting the server connection\n");
+    close(socket_desc);
+    
+    return 0;
+}
